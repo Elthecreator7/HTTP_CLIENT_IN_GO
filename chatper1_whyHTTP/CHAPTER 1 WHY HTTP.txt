@@ -1,0 +1,72 @@
+CHAPTER 1: WHY HTTP
+
+LESSON 1:
+Communicating on the Web
+Instagram would be pretty terrible if you had to manually copy your photos to your friend's phone when you wanted to share them. Modern applications need to be able to communicate information between devices over the internet.
+
+Gmail doesn't just store your emails in variables on your computer, it stores them on computers in their data centers
+You don't lose your Slack messages if you drop your computer in a lake, those messages exist on Slack's servers
+How Does Web Communication Work?
+When two computers communicate with each other, they need to use the same rules. An English speaker can't communicate verbally with a Japanese speaker, similarly, two computers need to speak the same language to communicate.
+
+This "language" that computers use is called a protocol. The most popular protocol for web communication is HTTP, which stands for Hypertext Transfer Protocol.
+
+Jello
+Throughout this course, we'll be building parts of an online issue tracking app called "Jello". It's a typical issue tracker with one key difference: this time it's good, actually.
+
+Assignment
+Take a look at the getIssueData function that I've provided in http.go. It retrieves information about issues from Jello's servers via HTTP as a slice of bytes []byte.
+
+In main.go do the following:
+
+Convert the slice of bytes to a string with the built-in string() type conversion.
+Print the string representation of the bytes to the console.
+It should look like a long, unformatted string of text representing raw issue data.
+
+Tip
+Notice how none of the data that is logged to the console was generated within our code! That's because the data we retrieved is being sent over the internet from our servers via HTTP.
+
+
+
+
+LESSON 2:
+HTTP Requests and Responses
+At the heart of HTTP is a simple request-response system. The "requesting" computer, also known as the "client", asks another computer for some information. That computer, "the server" sends back a response with the information that was requested.
+
+
+
+We'll talk about the specifics of how the "requests" and "responses" are formatted later. For now, just think of it as a simple question-and-answer system.
+
+Request: "What issues are on Jello?"
+Response: ["Fix bug", "Improve auth flow"]
+
+
+
+
+
+
+LESSON 3:
+HTTP Powers Websites
+HTTP, or Hypertext Transfer Protocol, is a protocol designed to transfer information between computers.
+
+There are other protocols for communicating over the internet, but HTTP is the most popular and is particularly great for websites and web applications. Each time you visit a website, your browser is making an HTTP request to that website's server. The server responds with all the text, images, and styling information that your browser needs to render its pretty website!
+
+
+
+
+
+
+LESSON 4 :
+HTTP URLs
+A URL, or Uniform Resource Locator, is the address of another computer, or "server" on the internet. Part of the URL specifies where to reach the server, and part of it tells the server what information we want.
+
+
+
+Put simply, a URL represents a piece of information on some computer somewhere. We can get access to it by making a request, and reading the response that the server replies with.
+
+Assignment
+I've updated the getIssueData() function to be a bit more flexible. It now takes a URL as a parameter.
+
+Try running the code in its current state. You should notice an error because the URL we're using is invalid.
+Fix the code so that the call to getIssueData function uses the provided issueURL.
+This time the printed data won't be as ugly, I added a prettify function that adds some formatting.
