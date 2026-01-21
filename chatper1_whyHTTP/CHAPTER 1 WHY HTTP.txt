@@ -70,3 +70,137 @@ I've updated the getIssueData() function to be a bit more flexible. It now takes
 Try running the code in its current state. You should notice an error because the URL we're using is invalid.
 Fix the code so that the call to getIssueData function uses the provided issueURL.
 This time the printed data won't be as ugly, I added a prettify function that adds some formatting.
+
+
+
+
+
+LESSON 5:
+Using URLs in HTTP
+The http:// at the beginning of a website URL specifies that the http protocol will be used for communication.
+
+
+
+Other communication protocols use URLs as well, (hence "Uniform Resource Locator"). That's why we need to be specific when we're making HTTP requests by prefixing the URL with http://
+
+
+
+
+
+LESSON 6:
+Requests and Responses Quiz
+
+
+A "client" is a computer making an HTTP request (whether it's a phone, a laptop, a desktop etc.)
+A "server" is a computer responding to an HTTP request
+A computer can be a client, a server, both, or neither. "Client" and "server" are just words we use to describe what computers are doing within a communication system.
+Clients send requests and receive responses
+Servers receive requests and send responses
+Example Code
+package main
+
+import (
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+)
+
+const usersUrl = "https://api.boot.dev/v1/courses_rest_api/learn-http/users"
+
+func main() {
+	users, err := getUserData(usersUrl)
+	if err != nil {
+		log.Fatalf("error getting user data: %v", err)
+	}
+	fmt.Println(string(users))
+}
+
+func getUserData(url string) ([]byte, error) {
+	res, err := http.Get(url)
+	if err != nil {
+		return nil, fmt.Errorf("error making request: %w", err)
+	}
+	defer res.Body.Close()
+
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response: %w", err)
+	}
+
+	return data, nil
+}	
+
+
+
+
+
+
+
+LESSON 8:
+net/http
+In this course, we'll be using Go's standard net/http package and the http.Client to make HTTP requests. In fact, we've already been using it! The http.Get function uses the http.DefaultClient under the hood.
+
+Making a Request
+import (
+	"fmt"
+	"io"
+	"net/http"
+)
+
+func getProjects() ([]byte, error) {
+	res, err := http.Get("https://api.jello.com/projects")
+	if err != nil {
+		return nil, fmt.Errorf("error making request: %w", err)
+	}
+	defer res.Body.Close()
+
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response: %w", err)
+	}
+	return data, nil
+}
+
+We'll go in-depth on the various things happening here later, but let's cover some basics for now.
+
+http.Get uses the http.DefaultClient to make a request to the given url
+res is the HTTP response that comes back from the server
+defer res.Body.Close() ensures that the response body is properly closed after reading. Not doing so can cause memory issues.
+io.ReadAll reads the response body into a slice of bytes []byte called data
+Assignment
+There is a bug in the getIssueData function! It's returning the entire http.Response instead of the data from the body (a slice of bytes). Fix it so that it returns []byte.
+
+Use io.ReadAll to read the .Body of the response.
+Return the resulting []byte
+
+
+
+
+
+
+
+
+LESSON 9:
+Web Clients
+Click to hide video
+
+As we've discussed, a web client is a device making requests to a web server.
+
+A client can be any type of device but is often something users physically interact with. For example:
+
+A desktop computer
+A mobile phone
+A tablet
+In a website or web application, we call the user's device the "front-end".
+
+A front-end client makes requests to a back-end server.
+
+
+
+
+
+
+
+
+
